@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors and form.non_field_errors %}
+    {{ form.non_field_errors }}
+{% endif %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <label for="username" class="form-label">Username</label>
+    {% if form.username.errors %}
+    {{ form.username.errors }}
+    {% endif %}
+    <input type="text" name="username" id="username" class="form-control" value="{{ form.username.value|default_if_none:'' }}">
+
+    <label for="password" class="form-label">Password</label>
+    {% if form.password.errors %}
+    {{ form.password.errors }}
+    {% endif %}
+    <input type="password" name="password" id="password" class="form-control" value="{{ form.password.value|default_if_none:'' }}">
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+<p>No account yet? <a href="{% url 'signup' %}" class="btn btn-primary">Signup</a></p>
+{% endblock content %}

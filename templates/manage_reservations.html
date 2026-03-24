@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Reservations</title>
+</head>
+<body>
+
+<h2>Manage Reservations (Admin/Staff)</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>User</th>
+        <th>Guests</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Table</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for res in reservations %}
+    <tr>
+        <td>{{ res.user.username }}</td>
+        <td>{{ res.guests }}</td>
+        <td>{{ res.reservation_date }}</td>
+        <td>{{ res.reservation_time }}</td>
+        <td>{{ res.status }}</td>
+        <td>
+            {% if res.table %}
+                Table {{ res.table.number }}
+            {% else %}
+                Not Assigned
+            {% endif %}
+        </td>
+        <td>
+            {% if res.status == "pending" %}
+                <a href="{% url 'confirm-reservation' res.id %}">Confirm</a> |
+                <a href="{% url 'cancel-reservation' res.id %}">Cancel</a>
+            {% else %}
+                ---
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+</html>

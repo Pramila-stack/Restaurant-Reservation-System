@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>My Reservations</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Table</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for r in reservations %}
+        <tr>
+            <td>{{ r.table.number }}</td>
+            <td>{{ r.reservation_date }}</td>
+            <td>{{ r.reservation_time }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No reservations yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
