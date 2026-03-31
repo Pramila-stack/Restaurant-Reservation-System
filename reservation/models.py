@@ -41,9 +41,17 @@ class Reservation(models.Model):
     name = models.CharField(max_length=50,null=True,blank=True)
     table = models.ForeignKey(Table,on_delete=models.CASCADE)
     reservation_date = models.DateField()
-    reservation_time = models.PositiveBigIntegerField()
+    reservation_time = models.TimeField()
     guests = models.PositiveBigIntegerField()
     status = models.CharField(max_length=10,choices=STATUS,default="pending")
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['table', 'reservation_date', 'reservation_time'],
+                name='unique_table_booking'
+            )
+        ]
 
     def __str__(self):
         return f"{self.user.username} - Table{self.table.number} on {self.reservation_date}"

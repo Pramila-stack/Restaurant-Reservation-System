@@ -1,26 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Login</h3>
 
-{% if form.errors and form.non_field_errors %}
-    {{ form.non_field_errors }}
-{% endif %}
+                    <!-- Display non-field errors -->
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
 
-<form action="" method="POST">
-    {% csrf_token %}
-    <label for="username" class="form-label">Username</label>
-    {% if form.username.errors %}
-    {{ form.username.errors }}
-    {% endif %}
-    <input type="text" name="username" id="username" class="form-control" value="{{ form.username.value|default_if_none:'' }}">
+                    <form action="" method="POST" novalidate>
+                        {% csrf_token %}
 
-    <label for="password" class="form-label">Password</label>
-    {% if form.password.errors %}
-    {{ form.password.errors }}
-    {% endif %}
-    <input type="password" name="password" id="password" class="form-control" value="{{ form.password.value|default_if_none:'' }}">
+                        <!-- Username field -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" id="username" class="form-control {% if form.username.errors %}is-invalid{% endif %}" value="{{ form.username.value|default_if_none:'' }}">
+                            {% if form.username.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.username.errors|striptags }}
+                            </div>
+                            {% endif %}
+                        </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
-<p>No account yet? <a href="{% url 'signup' %}" class="btn btn-primary">Signup</a></p>
+                        <!-- Password field -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" value="{{ form.password.value|default_if_none:'' }}">
+                            {% if form.password.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password.errors|striptags }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                        </div>
+                    </form>
+
+                    <p class="text-center mb-0">
+                        No account yet? 
+                        <a href="{% url 'signup' %}" class="btn btn-outline-primary btn-sm ms-2">Signup</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

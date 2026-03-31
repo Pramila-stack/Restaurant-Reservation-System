@@ -1,11 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Reserve Table</h2>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
-<a href="{% url 'home' %}" class="btn btn-outline-danger">Go back</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Reserve a Table</h2>
+
+                    <!-- Check Availability Form -->
+                    <form method="get" class="mb-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="reservation_date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="reservation_date" name="reservation_date" value="{{ request.GET.reservation_date }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reservation_time" class="form-label">Time</label>
+                            <input type="time" class="form-control" id="reservation_time" name="reservation_time" value="{{ request.GET.reservation_time }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="guests" class="form-label">Number of Guests</label>
+                            <input type="number" class="form-control" id="guests" name="guests" value="{{ request.GET.guests }}" min="1" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Check Availability</button>
+                        </div>
+                    </form>
+
+                    {% if form %}
+                    <hr>
+                    <!-- Reserve Table Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-success btn-lg">Reserve Table</button>
+                        </div>
+                    </form>
+                    {% endif %}
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-outline-danger">Go Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
