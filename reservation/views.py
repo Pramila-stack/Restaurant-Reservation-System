@@ -65,6 +65,15 @@ class ReserveTableView(LoginRequiredMixin, CreateView):
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[form.instance.user.email]
             )
+
+            send_mail(
+                subject="New Reservation Received",
+                message=f"New Reservation by {form.instance.user.username} for {form.instance.guests} guests on {form.instance.reservation_date} at {form.instance.reservation_time}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=["pramilatmg.np@gmail.com"]
+            )
+
+        
         return response
     
     
